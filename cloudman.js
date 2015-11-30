@@ -6,6 +6,7 @@ program
     .version('0.0.1')
     .command('status', 'print status of instances')
     .command('stop', 'stop instances')
+    .command('start', 'start instances')
     .parse(process.argv);
 
 if (!program.args.length) program.help();
