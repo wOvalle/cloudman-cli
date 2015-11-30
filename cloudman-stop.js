@@ -47,9 +47,9 @@ cloudman.stop(instance).then(function(json){
         var currSentence = mockupSentence;
         if(j.actionProcessed)
         {
-            currSentence
+            currSentence = currSentence
                 .replace('_processed_ ', '')
-                .replace('_id_', 'j.input')
+                .replace('_id_', j.input)
                 .replace(' _err_', '');
         }
         else {
