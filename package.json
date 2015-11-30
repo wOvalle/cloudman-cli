@@ -1,0 +1,28 @@
+{
+  "name": "cloudman-cli",
+  "version": "1.0.0",
+  "description": "CLI client for cloudman-api",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wovalle/cloudman-cli.git"
+  },
+  "keywords": [
+    "cloudman",
+    "cli",
+    "api"
+  ],
+  "author": "Willy Ovalle (willyovalle16@gmail.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wovalle/cloudman-cli/issues"
+  },
+  "homepage": "https://github.com/wovalle/cloudman-cli#readme",
+  "dependencies": {
+    "cloudman-api": "git+https://git@github.com/wovalle/cloudman-api.git",
+    "commander": "^2.9.0"
+  }
+}
