@@ -23,6 +23,6 @@
   "homepage": "https://github.com/wovalle/cloudman-cli#readme",
   "dependencies": {
     "cloudman-api": "git+https://git@github.com/wovalle/cloudman-api.git",
-    "commander": "^2.9.0"
+    "commander": "2.6.0"
   }
 }
