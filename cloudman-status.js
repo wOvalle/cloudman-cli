@@ -8,6 +8,7 @@ var globals = require('./globals');
 
 program
     .option('-a, --accounts [value]', 'accounts to include (comma separated), returns all the accounts by default')
+    .description('cloudman status. Prints instances status in given accounts.')
     .parse(process.argv);
 
 cloudman.init(cred);

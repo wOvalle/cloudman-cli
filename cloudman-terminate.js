@@ -10,6 +10,7 @@ program
     .option('-i, --id [value]', 'instance to terminate')
     .option('-a, --account [value]', 'account that holds the instance with given id')
     .option('-y --yes', 'bypass confirmation')
+    .description('cloudman terminate. Delete (terminate) instances.')
     .parse(process.argv);
 
 if(!program.id){

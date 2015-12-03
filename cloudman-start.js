@@ -10,6 +10,7 @@ program
     .option('-i, --id [value]', 'instance to start')
     .option('-a, --account [value]', 'account that holds the instance with given id')
     .option('-y --yes', 'bypass confirmation')
+    .description('cloudman start. Power on (start) instances.')
     .parse(process.argv);
 
 if(!program.id){

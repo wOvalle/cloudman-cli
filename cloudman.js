@@ -9,6 +9,7 @@ program
     .command('start', 'start instances')
     .command('terminate', 'delete instances')
     .command('create', 'create instances')
+    .description('cloudman-cli. Command Line Interface client of cloudman-api.')
     .parse(process.argv);
 
 if (!program.args.length) program.help();

@@ -13,6 +13,7 @@ program
     .option('-n, --name [value]', 'name of instance (only required by digital ocean)')
     .option('-r, --region [value]', 'region in which the instance will be created (should be a valid region of the provider)')
     .option('-y --yes', 'bypass confirmation')
+    .description('cloudman create. Creates instances with given properties in cloud providers.')
     .parse(process.argv);
 
 if(!program.type){
