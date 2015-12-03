@@ -12,6 +12,7 @@ program
     .option('-a, --account [value]', 'account in which the instance will be created (keyName in cred.js')
     .option('-n, --name [value]', 'name of instance (only required by digital ocean)')
     .option('-r, --region [value]', 'region in which the instance will be created (should be a valid region of the provider)')
+    .option('-y --yes', 'bypass confirmation')
     .parse(process.argv);
 
 if(!program.type){
@@ -78,6 +79,21 @@ cloudman.validDispositions().then(function(disp){
         return console.log('Image (%s) is invalid for provider %s.', program.image, provider);
     };
 
+    var question = 'Are you sure you want to create an instance with the following properties:\nType: _t\nImage: _i\nRegion: _r\n in account "_a"? <y/n>'
+        .replace('_t', program.type)
+        .replace('_i', program.image)
+        .replace('_r', program.region)
+        .replace('_a', program.account);
+
+    //if -y is passed, execute the action, ask for confirmation otherwise.
+    if(program.yes) executeAction()
+    else globals.askForConfirmation(question, executeAction);
+
+}).catch(globals.handleError);
+
+function executeAction(){
+    cloudman.init(cred);
+
     var objToCreate = [{
         properties: {
             type: program.type,
@@ -88,8 +104,6 @@ cloudman.validDispositions().then(function(disp){
         keyName: keyName[0]
     }];
 
-    cloudman.init(cred);
-
     var response = [];
     cloudman.create(objToCreate)
         .then(function(json){
@@ -98,5 +112,5 @@ cloudman.validDispositions().then(function(disp){
             console.log(response.join('\n'));
         })
         .catch(globals.handleError);
-}).catch(globals.handleError);
+};
 

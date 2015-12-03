@@ -9,6 +9,7 @@ var globals = require('./globals');
 program
     .option('-i, --id [value]', 'instance to start')
     .option('-a, --account [value]', 'account that holds the instance with given id')
+    .option('-y --yes', 'bypass confirmation')
     .parse(process.argv);
 
 if(!program.id){
@@ -34,16 +35,29 @@ if(!keyName || keyName.length === 0) {
     process.exit(1);
 }
 
-cloudman.init(cred);
-var response = [];
+var question = 'Are you sure you want to start the instance with id _i in account _a? <y/n>'
+    .replace('_i', program.id)
+    .replace('_a', program.account);
 
-var instance = [{
-    keyName: keyName[0],
-    instanceId: program.id
-}];
+//if -y is passed, execute the action, ask for confirmation otherwise.
+if(program.yes) executeAction()
+else globals.askForConfirmation(question, executeAction);
 
-cloudman.start(instance).then(function(json){
-    var mockupSentence = 'start action could _processed_ be performed in instance with id _id_. _err_';
-    var response = globals.parseActionRequest(json, mockupSentence);
-    console.log(response.join('\n'));
-}).catch(globals.handleError);
+
+function executeAction(){
+    cloudman.init(cred);
+    var response = [];
+
+    var instance = [{
+        keyName: keyName[0],
+        instanceId: program.id
+    }];
+
+    cloudman.start(instance).then(function(json){
+        var mockupSentence = 'start action could _processed_ be performed in instance with id _id_. _err_';
+        var response = globals.parseActionRequest(json, mockupSentence);
+        console.log(response.join('\n'));
+    }).catch(globals.handleError);
+
+
+};
