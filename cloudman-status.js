@@ -4,6 +4,7 @@ var cloudman = require('cloudman-api');
 var cred = require('./cred');
 var _ = require('lodash');
 var Table = require('cli-table');
+var globals = require('./globals');
 
 program
     .option('-a, --accounts [value]', 'accounts to include (comma separated), returns all the accounts by default')
@@ -24,7 +25,9 @@ if(program.accounts){
     });
 }
 
-cloudman.status(keyNames).then(prettyPrintInstances);
+cloudman.status(keyNames)
+    .then(prettyPrintInstances)
+    .catch(globals.handleError);
 
 function prettyPrintInstances(res){
     json = res.map(function(item){

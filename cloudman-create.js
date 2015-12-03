@@ -4,6 +4,7 @@ var cloudman = require('cloudman-api');
 var cred = require('./cred');
 var _ = require('lodash');
 var Table = require('cli-table');
+var globals = require('./globals');
 
 program
     .option('-t, --type [value]', 'type of instance to create. See validTypes in cloudman-api/providers')
@@ -93,32 +94,9 @@ cloudman.validDispositions().then(function(disp){
     cloudman.create(objToCreate)
         .then(function(json){
             var mockupSentence = 'Create action could _processed_ be performed. New Instance id: _id_. _err_';
-            _.each(json, function(j){
-                var currSentence = mockupSentence;
-                if(j.actionProcessed)
-                {
-                    currSentence = currSentence
-                        .replace('_processed_ ', '')
-                        .replace('_id_', j.input)
-                        .replace(' _err_', '');
-                }
-                else {
-                    currSentence = currSentence
-                        .replace('_processed_', 'not')
-                        .replace('_id_', j.input)
-                        .replace('_err_', 'Err: ' + j.errMessage);
-                }
-
-                response.push(currSentence);
-            });
-
+            var response = globals.parseActionRequest(json, mockupSentence);
             console.log(response.join('\n'));
         })
-        .catch(handleError);
-}).catch(handleError);
-
-var handleError = function(err){
-    //do logging in here
-    console.log(err, err.stack);
-};
+        .catch(globals.handleError);
+}).catch(globals.handleError);
 

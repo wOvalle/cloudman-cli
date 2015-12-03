@@ -4,6 +4,7 @@ var cloudman = require('cloudman-api');
 var cred = require('./cred');
 var _ = require('lodash');
 var Table = require('cli-table');
+var globals = require('./globals');
 
 program
     .option('-i, --id [value]', 'instance to terminate')
@@ -43,24 +44,8 @@ var instance = [{
 
 cloudman.terminate(instance).then(function(json){
     var mockupSentence = 'terminate action could _processed_ be performed in instance with id _id_. _err_';
-    _.each(json, function(j){
-        var currSentence = mockupSentence;
-        if(j.actionProcessed)
-        {
-            currSentence = currSentence
-                .replace('_processed_ ', '')
-                .replace('_id_', j.input)
-                .replace(' _err_', '');
-        }
-        else {
-            currSentence = currSentence
-                .replace('_processed_', 'not')
-                .replace('_id_', j.input)
-                .replace('_err_', 'Err: ' + j.errMessage);
-        }
 
-        response.push(currSentence);
-    });
-
+    var response = globals.parseActionRequest(json, mockupSentence);
     console.log(response.join('\n'));
-}).catch(function(err){console.log(err)});
+
+}).catch(globals.handleError);
