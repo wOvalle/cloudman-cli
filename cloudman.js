@@ -8,6 +8,7 @@ program
     .command('stop', 'stop instances')
     .command('start', 'start instances')
     .command('terminate', 'delete instances')
+    .command('create', 'create instances')
     .parse(process.argv);
 
 if (!program.args.length) program.help();
