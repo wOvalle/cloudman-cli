@@ -34,6 +34,7 @@ function prettyPrintInstances(res){
     json = res.map(function(item){
         return {
             id: item.id,
+            name: item.name,
             arch: item.architecture,
             type: item.type,
             zone: item.zone,
